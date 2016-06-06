@@ -13,9 +13,7 @@ a) Copy script to a local bin directory, for ex:
     $ cp instapaper.zsh/instapaper ~/.bin/instapaper
     $ chmod +x ~/.bin/instapaper
 
-b) Install HTTPie, a required depencency. Install using your usual package manager or using `pip`:
-
-    $ pip install httpie
+b) Install `curl` if not yet installed
 
 c) Export these two variables to your enviornment:
 
