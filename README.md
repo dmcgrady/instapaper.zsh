@@ -63,4 +63,4 @@ Now open Qutebrowser and test out the keyboard shortcut. You can change `sI` so 
 - Enjoy!
 t1mxg0d
 
-Licence: G
+Licence: GPL v3
