@@ -12,7 +12,7 @@
 ##------------------------------------------------------------------------
 
 API_HOST="https://www.instapaper.com/api"
-DEBUG=false
+DEBUG=true
 
 ## API -------------------------------------------------------------------
 
@@ -37,8 +37,9 @@ insta-auth() {
 ## Internal functions ----------------------------------------------------
 
 _check-deps() {
-    [[ -n "$(which curl)" ]] && \
-        echo "ERROR: Instapaper script requires curl to be installed"
+    [[ -x $(which curl) ]] || \
+        echo "ERROR: Instapaper script requires curl to be installed" &&
+        return 0
     return 1
 }
 
