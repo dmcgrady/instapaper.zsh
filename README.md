@@ -1,9 +1,9 @@
-Simple Instapaper CLI
+Instapaper.zsh (w/ Qutebrowser userscript support)
 ---
 
-A simple ZSH script for adding URLs to Instapaper.
+A simple ZSH script for adding URLs to Instapaper via CLI.
 
-With support for functioning as a Qutebrowser userscript.
+With support for functioning as a [Qutebrowser](https://qutebrowser.org) userscript, create a keyboard short to save the current page to [Instapaper](https://instapaper.com).
 
 ### Installation
 
@@ -13,8 +13,7 @@ a) Copy script to a local bin directory, for ex:
     $ cp instapaper.zsh/instapaper ~/.bin/instapaper
     $ chmod +x ~/.bin/instapaper
 
-b) Install HTTPie, a required depencency. Install using your usual package
-manager or using `pip`:
+b) Install HTTPie, a required depencency. Install using your usual package manager or using `pip`:
 
     $ pip install httpie
 
@@ -58,7 +57,6 @@ and copying this into the [normal] section (line 47-437).
         sI
 
 Now open Qutebrowser and test out the keyboard shortcut. You can change `sI` so whatever keyboard shortcut you like.
-
 
 - Enjoy!
 t1mxg0d
