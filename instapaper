@@ -9,10 +9,6 @@
 ##
 ##      $ instapaper add <url>
 ##
-## Dependencies:
-##
-##       $ pip install httpie
-##
 ##------------------------------------------------------------------------
 
 API_HOST="https://www.instapaper.com/api"
@@ -68,16 +64,15 @@ _api() {
 
     # Debugging
     $DEBUG && echo "INSTAPAPER: $API_METHOD $API_PATH $API_PARAMS"
-    $DEBUG && API_echo="HBhb" || API_echo="b"
-    $DEBUG && API_PRETTY="all" || API_PRETTY="none"
+
+    API_PARAMS=(
+        "username=$INSTAPAPER_USER"
+        "password=$INSTAPAPER_PASS"
+        "$API_PARAMS"
+    )
 
     # Execute API call
-    http --ignore-stdin --pretty=$API_PRETTY --echo=$API_echo -f \
-        $API_METHOD \
-        $API_PATH \
-        username=$INSTAPAPER_USER \
-        password=$INSTAPAPER_PASS \
-        $API_PARAMS
+    curl --ssl -X $API_METHOD -d ${(j:&:)API_PARAMS} $API_PATH
 }
 
 ## Testing ----------------------------------------------------------------
