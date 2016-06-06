@@ -1,0 +1,52 @@
+#!/usr/bin/env zsh
+
+# -----------------------------------------------------------------------
+# Instapaper.zsh installer
+# -----------------------------------------------------------------------
+
+echo "instapaper> Installing bin..."
+
+## Install to local bin directory ---------------------------------------
+
+SRC=$(pwd)/instapaper
+BIN_DIR=(
+    $HOME/.bin
+    $HOME/.local/bin
+    /usr/local/bin
+)
+for d in $BIN_DIR; do
+    # Select the first dir that is r/w
+    [[ -z "$DEST" ]] && test -w $d && DEST="$d/instapaper"
+done
+
+chmod +x $SRC
+cp -f $SRC $DEST
+
+[[ ! -x $DEST ]] && \
+    echo "instapaper> ERROR: failed to install bin to $DEST" && exit
+
+echo "instapaper> Done. Copied to:
+
+    $DEST
+"
+
+## Install as Qutebrowser userscript -----------------------------------
+
+echo "instapaper> Installing as Qutebrowser userscript..."
+
+QUTE_DEST="$HOME/.local/share/qutebrowser/userscripts/instapaper"
+ln -sf $DEST $QUTE_DEST
+
+echo "instapaper> Done. Linked bin from $DEST to:
+
+    $QUTE_DEST
+"
+
+## Prompt user to export pw -------------------------------------------
+
+echo "instapaper> Note: you must export your Instagram username and password in your shell:
+
+    export INSTAPAPER_USER=<username>
+    export INSTAPAPER_PASS=<password>
+"
+echo "instapaper> Installation complete. Exiting..."

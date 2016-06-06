@@ -7,13 +7,14 @@ With support for functioning as a [Qutebrowser](https://qutebrowser.org) userscr
 
 ### Installation
 
-a) Copy script to a local bin directory, for ex:
+a) Install `zsh` and `curl` if not yet installed
+
+b) Copy `instapaper` script to a local bin directory or run the installer
 
     $ git clone https://github.com/t1mxg0d/instapaper.zsh
-    $ cp instapaper.zsh/instapaper ~/.bin/instapaper
-    $ chmod +x ~/.bin/instapaper
-
-b) Install `curl` if not yet installed
+    $ cd instapaper.zsh
+    $ chmod +x install
+    $ ./install
 
 c) Export these two variables to your enviornment:
 
@@ -36,10 +37,9 @@ For example:
 
 ### Qutebrowser userscript
 
-Copy or symlink `instapaper` to `~/.local/share/qutebrowser/userscripts/` and make executable:
+Symlink `instapaper` bin installed above to `~/.local/share/qutebrowser/userscripts/` and make executable:
 
-    $ cp instapaper ~/.local/share/qutebrowser/userscripts/
-    $ chmod +x ~/.local/share/qutebrowser/userscripts/instapaper
+    $ ln -sf ~/.bin/instapaper ~/.local/share/qutebrowser/userscripts/instapaper
 
 Test it out by running:
 
