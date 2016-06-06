@@ -5,6 +5,8 @@ A simple ZSH script for adding URLs to Instapaper via CLI.
 
 With support for functioning as a [Qutebrowser](https://qutebrowser.org) userscript, create a keyboard short to save the current page to [Instapaper](https://instapaper.com).
 
+See also: [pinboard.zsh](https://github.com/t1mxg0d/pinboard.zsh) for a similar script for adding bookmarks to [Pinboard.in](https://pinboard.in) via ZSH and Qutebrowser.
+
 ### Installation
 
 a) Install `zsh` and `curl` if not yet installed
