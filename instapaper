@@ -37,9 +37,8 @@ insta-auth() {
 ## Internal functions ----------------------------------------------------
 
 _check-deps() {
-    [[ -n "$(which http)" ]] && $(http --help | grep -q HTTPie) || \
-        echo "ERROR: Instapaper script requires httpie to be installed:\r\n\r\n\
-        $ pip install httpie \r\n" && return 0
+    [[ -n "$(which curl)" ]] && \
+        echo "ERROR: Instapaper script requires curl to be installed"
     return 1
 }
 
