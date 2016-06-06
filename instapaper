@@ -12,6 +12,7 @@
 ##------------------------------------------------------------------------
 
 API_HOST="https://www.instapaper.com/api"
+DEBUG=false
 
 ## API -------------------------------------------------------------------
 
@@ -19,7 +20,6 @@ insta-qute-add() {
     echo "message-info \"Instapaper - Saving: $QUTE_URL[0,60]...\"" >> $QUTE_FIFO
     results="$(insta-add $QUTE_URL)"
     echo "message-info \"Instapaper - Article saved $results\"" >> $QUTE_FIFO
-    echo "$results" >> ~/logs/instapaper.log
 }
 
 insta-add() {
