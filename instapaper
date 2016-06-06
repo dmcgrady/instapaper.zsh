@@ -1,0 +1,95 @@
+#!/usr/bin/env zsh
+##------------------------------------------------------------------------
+##
+## Instapaper API CLI
+##
+##------------------------------------------------------------------------
+##
+## Usage:
+##
+##      $ instapaper add <url>
+##
+## Dependencies:
+##
+##       $ pip install httpie
+##
+##------------------------------------------------------------------------
+
+API_HOST="https://www.instapaper.com/api"
+
+## API -------------------------------------------------------------------
+
+insta-qute-add() {
+    echo "message-info \"Instapaper - Saving: $QUTE_URL[0,60]...\"" >> $QUTE_FIFO
+    results="$(insta-add $QUTE_URL)"
+    echo "message-info \"Instapaper - Article saved $results\"" >> $QUTE_FIFO
+    echo "$results" >> ~/logs/instapaper.log
+}
+
+insta-add() {
+    URL="$1" && [[ -z "$URL" ]] && \
+        echo "ERROR: \`api-add\` requires an argument (1:URL)" && return 0
+    $DEBUG && echo "INSTAPAPER: Adding URL $URL[0,60]..."
+    _api "POST" "/add" "url=$URL"
+}
+
+insta-auth() {
+    $DEBUG && echo "INSTAPAPER: Authenticating..."
+    _api "POST" "/authenticate" ""
+}
+
+## Internal functions ----------------------------------------------------
+
+_check-deps() {
+    [[ -n "$(which http)" ]] && $(http --help | grep -q HTTPie) || \
+        echo "ERROR: Instapaper script requires httpie to be installed:\r\n\r\n\
+        $ pip install httpie \r\n" && return 0
+    return 1
+}
+
+_api() {
+    _check-deps || exit
+
+    # Arguments
+    API_METHOD="$1"
+    API_PATH="$API_HOST$2"
+    API_PARAMS="$3"
+
+    # Validation
+    [[ $API_METHOD =~ "(POST|PUT|GET)" ]] || \
+        err="API_METHOD must be POST, GET, or PUT"
+    [[ $API_PATH =~ "^$API_HOST\/\S+" ]] || \
+        err="API_PATH must be an HTTP \`/path\` currently: $API_PATH"
+    [[ $API_PARAMS && "$API_PARAMS" =~ "=" ]] || \
+        err="API_PARAMS must be HTTP options \`key=value\` currently: $API_PARAMS"
+    [[ -z "$INSTAPAPER_USER" ]] && [[ -z "$INSTAPAPER_USER" ]] && \
+        err="Enviornment variables must be set:\r\n\r\n\texport INSTAPAPER_USER=<username> \r\n\texport INSTAPAPER_PASS=<password>\r\n"
+    [[ -n "$err" ]] && echo "ERROR: $err" && return 0
+
+    # Debugging
+    $DEBUG && echo "INSTAPAPER: $API_METHOD $API_PATH $API_PARAMS"
+    $DEBUG && API_echo="HBhb" || API_echo="b"
+    $DEBUG && API_PRETTY="all" || API_PRETTY="none"
+
+    # Execute API call
+    http --ignore-stdin --pretty=$API_PRETTY --echo=$API_echo -f \
+        $API_METHOD \
+        $API_PATH \
+        username=$INSTAPAPER_USER \
+        password=$INSTAPAPER_PASS \
+        $API_PARAMS
+}
+
+## Testing ----------------------------------------------------------------
+
+test-add() {
+    DEBUG=true
+    insta-add "http://www.computerworld.com/article/3079224/it-careers/judge-sends-two-to-prison-for-7-years-for-h-1b-fraud.html"
+}
+
+## CLI ---------------------------------------------------------------------
+
+[[ "$1" = ""          ]] && echo "INSTAPAPER: Please provide an action <test|add>"
+[[ "$1" = "test"      ]] && test-add
+[[ "$1" = "add"       ]] && insta-add $2
+[[ "$1" = "qute-add"  ]] && insta-qute-add
