@@ -12,7 +12,8 @@
 ##------------------------------------------------------------------------
 
 API_HOST="https://www.instapaper.com/api"
-DEBUG=true
+CIPHERS="ECDHE-ECDSA-AES256-GCM-SHA384,ECDHE-RSA-AES256-SHA384,DH-RSA-AES256-GCM-SHA384,DHE-RSA-AES256-GCM-SHA384,DHE-RSA-AES256-SHA256,ECDH-RSA-AES256-GCM-SHA384,ECDH-RSA-AES256-SHA384,AES256-GCM-SHA384"
+DEBUG=false
 
 ## API -------------------------------------------------------------------
 
@@ -25,26 +26,13 @@ insta-qute-add() {
 insta-add() {
     URL="$1" && [[ -z "$URL" ]] && \
         echo "ERROR: \`api-add\` requires an argument (1:URL)" && return 0
-    $DEBUG && echo "INSTAPAPER: Adding URL $URL[0,60]..."
-    _api "POST" "/add" "url=$URL"
-}
-
-insta-auth() {
-    $DEBUG && echo "INSTAPAPER: Authenticating..."
-    _api "POST" "/authenticate" ""
+    insta-api "POST" "/add" "url=$URL"
 }
 
 ## Internal functions ----------------------------------------------------
 
-_check-deps() {
-    [[ -x $(which curl) ]] || \
-        echo "ERROR: Instapaper script requires curl to be installed" &&
-        return 0
-    return 1
-}
-
-_api() {
-    _check-deps || exit
+local insta-api() {
+    check-deps || exit
 
     # Arguments
     API_METHOD="$1"
@@ -72,7 +60,14 @@ _api() {
     )
 
     # Execute API call
-    curl --ssl -X $API_METHOD -d ${(j:&:)API_PARAMS} $API_PATH
+    curl --http1.1 --ipv4 --tlsv1.2 --ciphers $CIPHERS -X $API_METHOD -d ${(j:&:)API_PARAMS} $API_PATH
+}
+
+local check-deps() {
+    [[ -x $(which curl) ]] || \
+        echo "ERROR: Instapaper script requires curl to be installed" &&
+        return 0
+    return 1
 }
 
 ## Testing ----------------------------------------------------------------
