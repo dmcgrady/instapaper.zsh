@@ -44,7 +44,7 @@ echo "instapaper> Done. Linked bin from $DEST to:
 
 ## Prompt user to export pw -------------------------------------------
 
-echo "instapaper> Note: you must export your Instagram username and password in your shell:
+echo "instapaper> Note: you must export your Instapaper username and password in your shell:
 
     export INSTAPAPER_USER=<username>
     export INSTAPAPER_PASS=<password>
