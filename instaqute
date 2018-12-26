@@ -1,0 +1,5 @@
+#!/bin/bash
+export INSTAPAPER_USER=<YOUR_USERNAME>
+export INSTAPAPER_PASS=<YOUR_PASSWORD>
+<BIN_FOLDER>/instapaper add $1 # You can find out the path to this file by running "which instapaper" in the command line
+exit 0
