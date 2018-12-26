@@ -41,7 +41,9 @@ For example:
 
 Symlink `instapaper` bin installed above to `<QUTEBROWSER_DATA_FOLDER>/userscripts/`. You can find out the location to your qutebrowser data folder by checking :version. If the `userscripts` folder doesn't exist, you must create it.
 
-    $ ln -sf ~/.bin/instapaper <QUTEBROWSER_DATA_FOLDER>/instapaper
+    $ ln -sf <INSTALL_PATH>/instapaper <QUTEBROWSER_DATA_FOLDER>/instapaper
+
+You can find out the `<INSTALL_PATH>` by executing `which instapaper` in the command line.
 
 Test it out by running:
 
