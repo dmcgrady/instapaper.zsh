@@ -50,6 +50,7 @@ You can find out the `<INSTALL_PATH>` by executing `which instapaper` in the com
 Creating global environment variables might be somewhat painful in some operating systems (e.g. OS X). Alternatively, you can use a wrapper script to export the environment variables to the instapaper script's execution context. This wrapper has been included to this repo: [instaqute](instaqute).
 
 If you choose to use it, follow the instructions above replacing `instapaper` with `instaqute` (make sure you edit the instaqute script, add your credentials and the path to the instapaper script):
+
     $ ln -sf <INSTALL_PATH>/instaqute <QUTEBROWSER_DATA_FOLDER>/instaqute
 
 #### Testing
