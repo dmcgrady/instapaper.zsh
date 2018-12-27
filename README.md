@@ -39,22 +39,28 @@ For example:
 
 ### Qutebrowser userscript
 
-Symlink `instapaper` bin installed above to `~/.local/share/qutebrowser/userscripts/` and make executable:
+Symlink `instapaper` bin installed above to `<QUTEBROWSER_DATA_FOLDER>/userscripts/`. You can find out the location to your qutebrowser data folder by checking :version. If the `userscripts` folder doesn't exist, you must create it.
 
-    $ ln -sf ~/.bin/instapaper ~/.local/share/qutebrowser/userscripts/instapaper
+    $ ln -sf <INSTALL_PATH>/instapaper <QUTEBROWSER_DATA_FOLDER>/instapaper
+
+You can find out the `<INSTALL_PATH>` by executing `which instapaper` in the command line.
+
+#### Alternative userscript setup
+
+Creating global environment variables might be somewhat painful in some operating systems (e.g. OS X). Alternatively, you can use a wrapper script to export the environment variables to the instapaper script's execution context. This wrapper has been included to this repo: [instaqute](instaqute).
+
+If you choose to use it, follow the instructions above replacing `instapaper` with `instaqute` (make sure you edit the instaqute script, add your credentials and the path to the instapaper script):
+
+    $ ln -sf <INSTALL_PATH>/instaqute <QUTEBROWSER_DATA_FOLDER>/instaqute
+
+#### Testing
 
 Test it out by running:
 
-    :spawn --userscript instapaper qute-add
+    :spawn --userscript (instapaper/instaqute) {url}
 
-Add a keyboard shortcut by opening `~/.config/qutebrowser/keys.conf`
-
-    vim +437 ~/.config/qutebrowser/keys.conf
-
-and copying this into the [normal] section (line 47-437).
-
-    spawn -u instapaper qute-add
-        sI
+Add a keyboard shortcut:
+    bind sI spawn --userscript (instapaper/instaqute) {url}
 
 Now open Qutebrowser and test out the keyboard shortcut. You can change `sI` so whatever keyboard shortcut you like.
 
